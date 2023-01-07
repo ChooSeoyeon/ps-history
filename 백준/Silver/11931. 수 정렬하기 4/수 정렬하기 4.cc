@@ -9,12 +9,8 @@ typedef long long ll;
 [문제 설명]
 - N개 수를 내림차순으로 정렬
 [문제 접근]
-- 비교함수를 이용해서 내림차순 정렬
+- 부호 뒤집어 입력 받고 오름차순 정렬 후 부호 뒤집어 출력하기
 */
-bool compare(int a, int b) {
-	return a > b;
-}
-
 int main() {
 	ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
@@ -25,13 +21,13 @@ int main() {
 	cin >> n;
 	for (int i = 0; i < n; i++) {
 		cin >> x;
-		v.push_back(x);
+		v.push_back(-x);
 	}
 
-	sort(v.begin(), v.end(), compare);
+	sort(v.begin(), v.end());
 
 	for (int i = 0; i < n; i++) {
-		cout << v[i] << "\n";
+		cout << -v[i] << "\n";
 	}
 
 	return 0;

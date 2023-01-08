@@ -19,7 +19,7 @@ int main() {
 	string n;
 	vector<int> v;
 
-	cin >> n; // 숫자를 문자열로 입력받기
+	cin >> n; // 숫자를 문자열로 입력받기. 정수로 입력받으면 길이 구하는 로직 따로 필요해서, string으로 입력받아 length()함수 이용함
 	//cout << typeid(n[0]).name();
 	for (int i = 0; i < n.length(); i++) {
 		v.push_back(n[i] - '0'); // 문자열의 각 문자를 숫자로 바꿔서 저장. 

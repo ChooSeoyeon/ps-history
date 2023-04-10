@@ -4,6 +4,16 @@
 
 using namespace std;
 
+/*
+[문제 설명]
+- 1번 : 12345 반복
+- 2번 : 21232425 반복
+- 3번 : 3311224455 반복
+- 시험 최대 10000문제
+[문제 접근]
+- 완전 탐색_브루트포스
+*/
+
 vector<int> solution(vector<int> answers) {
     vector<int> answer;
 

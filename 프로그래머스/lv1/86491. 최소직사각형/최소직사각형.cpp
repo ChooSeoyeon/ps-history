@@ -15,24 +15,28 @@ using namespace std;
 
 int solution(vector<vector<int>> sizes) {
     int answer = 0;
-    vector<int> big;
-    vector<int> small;
+    int big = 0;
+    int small = 0;
     
     // sizes.size()는 명함 개수
     for(int i=0; i<sizes.size(); i++) {
-        if(sizes[i][0] > sizes[i][1]) {
-            big.push_back(sizes[i][0]);
-            small.push_back(sizes[i][1]);
-        }
-        else  {
-            big.push_back(sizes[i][1]);
-            small.push_back(sizes[i][0]);
-        }
+        big = max(big, max(sizes[i][0], sizes[i][1])); // 둘 중 더 큰 애들 중 최대값
+        small = max(small, min(sizes[i][0], sizes[i][1])); // 둘 중 더 작은 애들 중 최대값
+        
+        // if(sizes[i][0] > sizes[i][1]) {
+        //     big.push_back(sizes[i][0]);
+        //     small.push_back(sizes[i][1]);
+        // }
+        // else  {
+        //     big.push_back(sizes[i][1]);
+        //     small.push_back(sizes[i][0]);
+        // }
     }
     
-    int biggest = *max_element(big.begin(), big.end());
-    int smallest = *max_element(small.begin(), small.end());
-    answer = biggest * smallest;
+    // int biggest = *max_element(big.begin(), big.end());
+    // int smallest = *max_element(small.begin(), small.end());
+    // answer = biggest * smallest;
+    answer = big * small;
     
     return answer;
 }

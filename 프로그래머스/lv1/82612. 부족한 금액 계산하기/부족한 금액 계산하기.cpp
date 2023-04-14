@@ -14,5 +14,5 @@ using namespace std;
 long long solution(int price, int money, int count)
 {
     long long sum=1LL*price*(count+1)*count/2;
-    return (money-sum<0)?(money-sum)*(-1):0;
+    return (money<sum)?sum-money:0;
 }

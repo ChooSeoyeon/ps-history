@@ -7,8 +7,8 @@ import java.util.*;
 */
 class Solution {
     public int[] solution(int[] array, int[][] commands) {
-        int[] answer = {};
-        List<Integer> list = new ArrayList<>();
+        int[] answer = new int[commands.length];
+        
         for(int i=0; i<commands.length; i++) {
             // start, end, index는 모두 1부터 시작
             int start = commands[i][0];
@@ -17,9 +17,8 @@ class Solution {
             
             int[] slice = Arrays.copyOfRange(array, start-1, end);
             Arrays.sort(slice);
-            list.add(slice[index-1]);
-        } 
-        answer = list.stream().mapToInt(i->i).toArray();
+            answer[i] = slice[index-1];
+        }
         return answer;
     }
 }

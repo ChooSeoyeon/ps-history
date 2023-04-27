@@ -12,22 +12,20 @@ import java.util.*;
 class Solution {
     public int[] solution(int[] lottos, int[] win_nums) {
         int[] answer = {0, 0};
-        for(int i=0; i<6; i++) {
-            if(lottos[i]==0) answer[0]++;
-            else {
-                for(int j: win_nums){
-                    if(j == lottos[i]) {
-                        answer[0]++;
-                        answer[1]++;
-                    }        
-                }
+        for(int i: lottos) {
+            if(i == 0) {
+                answer[0]++;
+                continue;
+            } 
+            for(int j: win_nums){
+                if(i == j) {
+                    answer[0]++;
+                    answer[1]++;
+                }        
             }
-            // Arrays.asList(win_nums).contains(lottos[i])
         }
-        answer[0]=7-answer[0];
-        answer[1]=7-answer[1];
-        if(answer[0]==7) answer[0]--;
-        if(answer[1]==7) answer[1]--;
+        answer[0]=Math.min(7-answer[0], 6);
+        answer[1]=Math.min(7-answer[1], 6);
         return answer;
     }
 }

@@ -1,11 +1,5 @@
 SELECT CART_ID
 FROM CART_PRODUCTS
-WHERE NAME IN ('Milk','Yogurt') # WHERE NAME = 'Cereal' OR NAME = 'Milk'
-GROUP BY CART_ID HAVING COUNT(DISTINCT NAME)=2;
-
-
-# 287
-# 448
-# 578
-# 977
-# 1048
+WHERE NAME = 'Milk' AND CART_ID IN (SELECT CART_ID
+                                   FROM CART_PRODUCTS
+                                   WHERE NAME = 'Yogurt');

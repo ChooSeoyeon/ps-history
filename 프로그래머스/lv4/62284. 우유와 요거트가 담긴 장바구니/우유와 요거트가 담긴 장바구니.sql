@@ -1,5 +1,10 @@
-SELECT DISTINCT CART_ID
+# SELECT DISTINCT CART_ID
+# FROM CART_PRODUCTS
+# WHERE NAME = 'Milk' AND CART_ID IN (SELECT CART_ID
+#                                    FROM CART_PRODUCTS
+#                                    WHERE NAME = 'Yogurt');
+
+SELECT CART_ID
 FROM CART_PRODUCTS
-WHERE NAME = 'Milk' AND CART_ID IN (SELECT CART_ID
-                                   FROM CART_PRODUCTS
-                                   WHERE NAME = 'Yogurt');
+WHERE NAME = 'Milk' OR NAME = 'Yogurt'
+GROUP BY CART_ID HAVING COUNT(DISTINCT NAME)=2;

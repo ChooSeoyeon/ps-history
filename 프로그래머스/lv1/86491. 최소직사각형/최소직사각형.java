@@ -16,9 +16,9 @@ class Solution {
         int small = 0;
         
         // 명함 개수만큼 반복
-        for(int i=0; i<sizes.length; i++) {
-            big = Math.max(big, Math.max(sizes[i][0], sizes[i][1])); // 둘 중 더 큰 애들 중 최대값
-            small = Math.max(small, Math.min(sizes[i][0], sizes[i][1])); // 둘 중 더 작은 애들 중 최대값
+        for (int[] card : sizes) {
+            big = Math.max(big, Math.max(card[0], card[1])); // 둘 중 더 큰 애들 중 최대값
+            small = Math.max(small, Math.min(card[0], card[1])); // 둘 중 더 작은 애들 중 최대값
         }
         
         answer = big*small;

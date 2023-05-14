@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 /*
@@ -8,24 +11,24 @@ import java.util.*;
 */
 public class Main {
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt(); // 데이터 개수
-        int M = sc.nextInt(); // 질의 개수
-        int[] A = new int[N]; // 배열
-        int[] S = new int[N]; // 합 배열
-        for(int i=0; i<N; i++) {
-            A[i] = sc.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(bf.readLine()); // M N
+        int N = Integer.parseInt(st.nextToken()); // 데이터 개수
+        int M = Integer.parseInt(st.nextToken()); // 질의 개수
+        int[] S = new int[N+1]; // 합 배열. 원래 배열은 따로 저장할 필요 없어서 안만듦.
+
+        st = new StringTokenizer(bf.readLine()); // 대상 배열
+        for(int i=1; i<=N; i++) { // S[0]은 0으로 초기화 되어 있어서 문제 없음
+            S[i] = S[i-1] + Integer.parseInt(st.nextToken());
         }
-        S[0]=A[0];
-        for(int i=1; i<N; i++) {
-            S[i] = S[i-1] + A[i];
-        }
+
         for(int i=0; i<M; i++) {
-            int a = sc.nextInt();
-            int b = sc.nextInt();
-            if(a<2) System.out.println(S[b-1]); // a가 1인 경우
-            else System.out.println(S[b-1]-S[a-2]);
+            st = new StringTokenizer(bf.readLine()); // 질의
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            System.out.println(S[b]-S[a-1]);
         }
     }
 }

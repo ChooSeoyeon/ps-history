@@ -14,13 +14,13 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
         int[] A = new int[N];
-        int max=0, sum=0;
+        long max=0, sum=0; // int도 괜찮지만, 큰 수 들어갈 수도 있으니 왠만하면 long으로 선언하기
         for(int i=0; i<N; i++) {
             A[i] = sc.nextInt();
             sum+=A[i];
             if(max<A[i]) max=A[i];
         }
 
-        System.out.println((double)sum/max*100/N);
+        System.out.println(sum*100.0/max/N); // 100.0은 (double)과 같은 효과
     }
 }

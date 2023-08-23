@@ -22,25 +22,28 @@ public class Main {
         sc.nextLine();
         char[] ph = sc.next().toCharArray();
 
+        // 출력
+        System.out.println(countEatable(k, ph));
+    }
+
+    private static int countEatable(int k, char[] ph) {
+
         int cnt = 0;
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < ph.length; i++) {
             if (ph[i] == 'P' && canEat(i, k, ph)) {
                 cnt++;
             }
         }
-
-        System.out.println(cnt);
+        return cnt;
     }
 
     private static boolean canEat(int i, int k, char[] ph) {
 
         for (int j = i - k; j <= i + k; j++) {
-            if (j == i) continue;
-            if (j >= 0 && j < ph.length) {
-                if (ph[j] == 'H') {
-                    ph[j] = 'N';
-                    return true;
-                }
+            if (j == i) continue; // 본인은 제외
+            if (j >= 0 && j < ph.length && ph[j] == 'H') {
+                ph[j] = 'N';
+                return true;
             }
         }
         return false;

@@ -39,15 +39,12 @@ class Solution {
                 long a = line[i][0]; long b = line[i][1]; long e = line[i][2];
                 long c = line[j][0]; long d = line[j][1]; long f = line[j][2];
                 
-                long adbc = a*d-b*c;
-                long bfed = b*f-e*d;
-                long ecaf = e*c-a*f;
-                if(adbc == 0) continue;
-                if(bfed % adbc != 0) continue;
-                if(ecaf % adbc != 0) continue;
+                if((a*d-b*c) == 0) continue;
+                if((b*f-e*d) % (a*d-b*c) != 0) continue;
+                if((e*c-a*f) % (a*d-b*c) != 0) continue;
                 
-                long x = bfed / adbc;
-                long y = ecaf / adbc;
+                long x = (b*f-e*d) / (a*d-b*c);
+                long y = (e*c-a*f) / (a*d-b*c);
 
                 coordinates.add(new Point(x, y)); // 중복 제거 안됨. new라서.
                 
@@ -62,13 +59,14 @@ class Solution {
         long height = maxY - minY + 1;
         
         answer = new String[(int)height];
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for(int i=0; i<width; i++) {
-            stringBuilder.append(".");
-        }
-        Arrays.fill(answer, stringBuilder.toString());
         
+        String oneLine = "";
+        for(int i=0; i<width; i++) {
+            oneLine += ".";
+        }
+        for(int i=0; i<height; i++) {
+            answer[i] = oneLine;
+        }
         for(Point point : coordinates) {
             int starX = (int)point.x - (int)minX;
             int starY = (int)maxY - (int)point.y;

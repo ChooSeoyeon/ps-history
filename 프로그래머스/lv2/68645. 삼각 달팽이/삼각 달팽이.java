@@ -15,45 +15,38 @@
 */
 
 class Solution {
-    int lastValue = 0;
-    int lastI = -1;
-    int lastJ = 0;
     
     public int[] solution(int n) {
         int[] answer = new int[n*(n+1)/2];
         int[][] triangle = new int[n][n];
+        int lastValue = 1;
+        int lastI = -1;
+        int lastJ = 0;
         int i, j;
-        
         for(i = n; i > 0; i--) {
             for(j = 1; j <= i; j++) {
-                fillTriangle(triangle, i, j, n);
+                if(i % 3 == n % 3) {
+                    lastI++;
+                }
+                else if(i % 3 == (n + 2) % 3) {
+                    lastJ++;
+                }
+                else {
+                    lastI--;
+                    lastJ--;
+                }
+                triangle[lastI][lastJ] = lastValue++;
             }
-            lastValue += j;
-            lastValue--;
         }
         
-        int index = 0;
-        for(i=0; i<triangle.length; i++) {
-            for(j=0; j<triangle[i].length; j++) {
+        int k = 0;
+        for(i=0; i<n; i++) {
+            for(j=0; j<n; j++) {
                 if(triangle[i][j] == 0) break;
-                answer[index++] = triangle[i][j];
+                answer[k++] = triangle[i][j];
             }
         }
         
         return answer;
-    }
-    
-    private void fillTriangle(int[][] triangle, int i, int j, int n) {
-        if(i % 3 == n % 3) {
-            lastI++;
-        }
-        else if(i % 3 == (n + 2) % 3) {
-            lastJ++;
-        }
-        else {
-            lastI--;
-            lastJ--;
-        }
-        triangle[lastI][lastJ] = lastValue + j;
     }
 }

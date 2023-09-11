@@ -26,6 +26,7 @@ class Solution {
             if(findS != -1) {
                 answer[0] = i;
                 answer[1] = findS;
+                break;
             }
         }
         

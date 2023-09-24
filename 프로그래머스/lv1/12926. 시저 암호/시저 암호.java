@@ -10,15 +10,10 @@ import java.util.*;
 class Solution {
     public String solution(String s, int n) {
         String answer = "";
-        char[] ca = s.toCharArray();
-        for(char c : ca) {
-            if(c >= 'a' && c <= 'z') {
-                c += n;
-                if(c > 'z') c -= 26;
-            }
-            if(c >= 'A' && c <= 'Z') {
-                c += n;
-                if(c > 'Z') c -= 26;
+        for(char c : s.toCharArray()) {
+            if(Character.isLetter(c)) {
+                char base = Character.isLowerCase(c) ? 'a' : 'A';
+                c = (char)(base + (c - base + n) % 26);
             }
             answer += String.valueOf(c);
         }

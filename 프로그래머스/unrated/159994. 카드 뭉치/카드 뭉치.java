@@ -22,7 +22,6 @@ class Solution {
     
     public String dfs(String[] cards1, String[] cards2, String[] goal, int i, int j, int k) {
         if(k == goal.length) return "Yes";
-        if(i >= cards1.length && j >= cards2.length) return "No";
         if(i < cards1.length && goal[k].equals(cards1[i])) {
             return dfs(cards1, cards2, goal, i + 1, j, k + 1);
         }

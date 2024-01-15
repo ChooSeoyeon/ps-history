@@ -1,41 +1,65 @@
 import java.util.Scanner;
 
 /*
-[설명] Do it 알고리즘 코딩테스트 문제 006
-- N을 연속된 자연수의 합으로 나타낼 수 있는 경우의 수 구하기
-[접근]
-- 투 포인터 (자연수 합의 시작, 끝을 포인터로 지정(인덱스를 저장하는 변수 사용함, 단 여기선 배열이 1부터 시작하는 자연수 집합이라 인덱스가 값 그 자체임)) -> O(n)
-- 투 포인터 이동 원칙
-    - if(sum > N) sum-=start; start++;
-    - if(sum < N) end++; sum+=end;
-    - if(sum == N) cnt++; end++; sum+=end;
+[설명] https://www.acmicpc.net/problem/2018
+- N을 몇 개의 연속된 자연수의 합으로 나타낼 수 있는 가지수 구하기
+[접근] 구간합 + 투포인터
+- i=1,j=1,sum=i인 상태에서 j를 증가시키며 sum에 더함 sum+=(++j)
+	- 1, 1+2, 1+2+3, 1+2+3+4, 1+2+3+4+5(15)
+- sum==정답 -> i와 j 모두 증가시킴
+	- 2+3+4+5+6
+	- 5+6+7
+	- 8+9
+	- 16
+- sum>정답 -> i를 증가시켜 sum에서 뺌 (j를 감소시켜 sum에서 빼지 않는 이유 : 아까 이미 본 상태이므로)
+	- 3+4+5+6, 4+5+6(15)
+	- 6+7
+	- 7+8(15)
+	- 9
+	- 10
+	- 11
+	- 14
+	- 15(15)
+- sum<정답 -> j를 증가시키며 sum에 더함 (i를 감소시켜 sum에 더하지 않는 이유 : 아까 이미 본 상태이므로)
+	- 6+7+8
+	- 9+10
+	- 10+11
+	- 13+14
+	- 14+15
+	- 15+16(종료)
+- 종료조건 : j가 n보다 커질 때 (혹은 i가 j보다 커질 때==범위 내 값이 1개 인데, 합이 15보다 큼)
+- 연산 예시
+	- i 증가시켜 이전값 sum에서 뺌 : sum -= (i++);
+	- j 증가시켜 새로운값 sum에 더함 : sum += (++j);
 */
+
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt(); // 주어진 N
-        int start = 1; // 시작 포인터
-        int end = 1; // 끝 포인터
-        int cnt = 1; // 경우의 수 (N 자기 자신만 더한 경우는 먼저 카운트 해 초기값이 1임)
-        int sum = 1; // 합 저장 (start, end가 모두 1인 경우 sum=1이라 초기값이 1임)
+	private static int solution(int n) {
+		int answer = 0;
+		int i = 1;
+		int j = 1;
+		int sum = i;
+		while (j <= n) {
+			if (sum == n) {
+				sum -= (i++);
+				sum += (++j);
+				answer++;
+			} else if (sum > n) {
+				sum -= (i++);
+			} else {
+				sum += (++j);
+			}
+		}
 
-        // 투포인터 이동원칙 대로 포인터 이동시키며 경우의 수 모두 찾기
-        while(end != N) { // end가 N이 될 때까지 반복
-            if(sum > N) { // if(sum > N) sum-=start; start--;
-                sum -= start;
-                start++;
-            }
-            else if(sum < N) { // if(sum < N) end++; sum+=end;
-                end++;
-                sum += end;
-            }
-            else if(sum == N) { // if(sum == N) cnt++; end++; sum+=end;
-                end++;
-                sum += end;
-                cnt++;
-            }
-        }
+		return answer;
+	}
 
-        System.out.println(cnt);
-    }
+	public static void main(String[] args) throws Exception {
+		Scanner sc = new Scanner(System.in);
+
+		int n = sc.nextInt();
+		System.out.println(solution(n));
+
+		sc.close();
+	}
 }

@@ -12,13 +12,12 @@ import java.io.OutputStreamWriter;
 	- 두 정렬된 배열을 하나의 정렬된 배열로 합치기
 [메모]
 [오답]
-- sout 썼다가 시간 초과 남. 개행 문자 따로 빼도 시간 초과 남
-- bufferWriter 써도 시간 초과 남
-- 배열을 로컬 변수로 각각 가지고 있다가 인자로 넘겨주는 방식에서, static 변수로 갖고 있게 바꿨더니 시간 초과 해결됨
+- sout 썼다가 시간 초과 남. 개행 문자 따로 빼도 시간 초과 남. bufferwriter 필수로 써야 했음. 그리고 이걸로 끝이 아니었음.
+- 배열을 로컬 변수로 각각 가지고 있다가 인자로 넘겨주는 방식에서, static 변수로 갖고 있게 바꿨더니 시간 초과 해결됨 (왤까?)
 */
 public class Main {
-	private static int[] numbers = new int[1_000_001];
-	private static int[] temp = new int[1_000_001];
+	private static int[] numbers;
+	private static int[] temp;
 
 	private static void solution(int n) {
 		mergeSort(0, n);
@@ -59,11 +58,13 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		int n = Integer.parseInt(br.readLine());
+		numbers = new int[n];
+		temp = new int[n];
 		for (int i = 0; i < n; i++) {
 			numbers[i] = Integer.parseInt(br.readLine());
 		}
+		
 		solution(n);
-
 		for (int i = 0; i < n; i++) {
 			bw.write(numbers[i] + "\n");
 		}

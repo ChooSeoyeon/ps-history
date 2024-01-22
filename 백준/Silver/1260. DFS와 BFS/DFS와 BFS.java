@@ -1,71 +1,73 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
 
+/*
+[설명] Do it 알고리즘 코딩테스트 문제 026
+[접근] DFS와 BFS
+*/
 public class Main {
-    static boolean visited[];
+    static boolean[] visited;
     static ArrayList<Integer>[] A;
 
-    public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
-        int N = scan.nextInt(); // 노드 개수
-        int M = scan.nextInt(); // 에지 개수
-        int Start = scan.nextInt(); // 시작점
+    public static void main(String[] args) throws Exception {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt(); // 노드 수
+        int M = sc.nextInt(); // 엣지 수
+        int start = sc.nextInt(); // 시작 노드
 
-        // 1. 인접 리스트로 그래프 표현하기
-        A = new ArrayList[N+1];
-        for(int i=1; i<=N; i++) { // 노드 초기화
+        // 그래프 표현
+        A = new ArrayList[N + 1]; // 0번 인덱스는 사용 안함
+        for (int i = 1; i < N + 1; i++) { // 노드 수 만큼 반복
             A[i] = new ArrayList<Integer>();
         }
-
-        for(int i=0; i<M; i++) { // 엣지의 양끝 노드 입력받기
-            int S = scan.nextInt();
-            int E = scan.nextInt();
-            A[S].add(E);
-            A[E].add(S); // 양방향이라서 양쪽 노드에 엣지 추가
+        for (int i = 0; i < M; i++) { // 엣지 수 만큼 반복
+            int s = sc.nextInt();
+            int e = sc.nextInt();
+            A[s].add(e);
+            A[e].add(s);
         }
 
-        for(int i=1; i<=N; i++) { // 번호 작은 것 먼저 방문하기 위해 각 노드의 엣지들 정렬
+        // 번호 작은 것 먼저 방문하기 위해 정렬
+        for (int i = 1; i <= N; i++) {
             Collections.sort(A[i]);
         }
 
         // DFS
-        // 2. 방문 배열 초기화하기
-        visited = new boolean[N+1];
-        // 3. 시작 노드 스택에 삽입하기(여기선 스택 대신 재귀함수 사용)
-        DFS(Start);
+        visited = new boolean[N + 1];
+        DFS(start);
         System.out.println();
 
         // BFS
-        // 2. 방문 배열 초기화하기
-        visited = new boolean[N+1];
-        // 3. 시작 노드 큐에 삽입하기
-        BFS(Start);
+        visited = new boolean[N + 1];
+        BFS(start);
         System.out.println();
     }
 
-    public static void DFS(int Node) {
-        System.out.print(Node + " "); // 현재 노드 출력하기
-        visited[Node] = true; // 현재 노드 방문 기록하기
-        // 인접한 미방문 노드로 DFS 실행하기
-        for(int i: A[Node]) { // 현재 노드의 엣지들
-            if (!visited[i]) {
+    static void DFS(int Node) {
+        System.out.print(Node + " ");
+        visited[Node] = true;
+        for (int i : A[Node]) {
+            if (!visited[i]) { // 탐색 안 한 노드 기준으로 dfs 실행
                 DFS(i);
             }
         }
     }
 
-    public static void BFS(int Node) {
-        Queue<Integer> queue = new LinkedList<Integer>();
-        queue.add(Node); // 시작 노드 큐에 삽입하기
-        visited[Node] = true; // 시작 노드 방문 기록하기
-        // 인접한 미방문 노드로 BFS 실행하기
-        while(!queue.isEmpty()) {
-            // 큐에서 현재 노드 가져와서 출력하기
-            int new_Node = queue.poll();
-            System.out.print(new_Node + " ");
-            for(int i: A[new_Node]) { // 현재 노드의 엣지들
-                if(!visited[i]) {
-                    queue.add(i); // 인접한 미방문 노드 큐에 삽입하기
-                    visited[i] = true; // 인접한 미방문 노드 방문 기록하기
+    static void BFS(int Node) {
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(Node); // 큐에 시작 노드를 넣음
+        visited[Node] = true; // 큐에 들어가는 순간 방문 처리
+
+        while (!queue.isEmpty()) { // 큐가 빌 때까지 반복
+            int nowNode = queue.poll(); // 큐에서 하나 꺼냄
+            System.out.print(nowNode + " ");
+            for (int i : A[nowNode]) {
+                if (!visited[i]) { // 갈 수 있는 애들을 큐에 넣어줌
+                    queue.add(i);
+                    visited[i] = true;
                 }
             }
         }

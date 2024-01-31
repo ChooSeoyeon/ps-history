@@ -56,6 +56,11 @@ public class Main {
 			}
 		}
 
+		// 5. 개수로 비교했을 때 정렬 결과에 모든 노드가 들어가지 않았다면, 사이클 존재하는 것이니 예외 처리
+		if (result.size() != n) {
+			throw new IllegalArgumentException("사이클이 존재합니다");
+		}
+
 		return result.stream().mapToInt(i -> i).toArray();
 	}
 

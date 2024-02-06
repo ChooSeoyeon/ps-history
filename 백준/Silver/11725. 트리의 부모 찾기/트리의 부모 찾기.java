@@ -12,11 +12,16 @@ import java.util.Queue;
 	2-1. 큐에서 뺀 노드(현재 노드)를 출력하기
 	2-2. 현재 노드의 인접 노드들 중 부모 노드 제외하고 나머지를 큐에 넣고, 해당 노드들의 부모로 현재 노드를 저장하기
 [메모]
+- dfs는 위 과정에서 큐를 스택으로만 바꾸면 됨
 */
 public class Main {
+	private static LinkedList<Integer>[] graph;
+	private static int[] parent;
+	private static Queue<Integer> queue;
+
 	private static int[] solution(int n, int[][] numbers) {
 		// 1. 트리를 인접 리스트로 표현하고, 부모배열 생성(0으로 초기화)하고, 큐에 시작점(루트) 넣기
-		LinkedList<Integer>[] graph = new LinkedList[n + 1];
+		graph = new LinkedList[n + 1];
 		for (int i = 1; i <= n; i++) {
 			graph[i] = new LinkedList<>();
 		}
@@ -27,15 +32,22 @@ public class Main {
 			graph[end].add(start);
 		}
 
-		int[] parent = new int[n + 1]; // 0은 비우고, 노드 개수만큼 생성
-
-		Queue<Integer> queue = new LinkedList<>();
+		parent = new int[n + 1]; // 0은 비우고, 노드 개수만큼 생성
+		queue = new LinkedList<>();
 		queue.add(1);
 
+		// 2. bfs 혹은 dfs
+		bfs();
+
+		return parent;
+	}
+
+	private static void bfs() {
 		// 2. bfs (큐가 빌 때까지 반복)
 		while (!queue.isEmpty()) {
 			// 2-1. 큐에서 뺀 노드(현재 노드)를 출력하기
 			int current = queue.remove();
+			// System.out.println(current);
 
 			// 2-2. 현재 노드의 인접 노드들 중 부모 노드 제외하고 나머지를 큐에 넣고, 해당 노드들의 부모로 현재 노드를 저장하기
 			for (int next : graph[current]) {
@@ -46,8 +58,6 @@ public class Main {
 				queue.add(next);
 			}
 		}
-
-		return parent;
 	}
 
 	public static void main(String[] args) throws Exception {

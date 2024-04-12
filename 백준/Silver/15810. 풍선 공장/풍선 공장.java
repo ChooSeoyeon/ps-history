@@ -27,6 +27,8 @@ import java.io.InputStreamReader;
 - 1 로 8개 만드려할 때 8이 나와야 하는데 9가 나오는 반례 찾음
     - o에서 끝날 땐 그 값 그대로 쓰고, x에서 끝났을 땐 +1 해서 값 쓰도록 변경해 일단 간단히 해결함
     - 플래그 대신 result를 저장해두게 해서 제대로 해결함
+- right을 10^6으로 뒀었는데... 실제 가능한 최대값으로 바꾸니 해결됨..... 
+    - 1개 만드는 데 10^6 분 걸리는 스태프 한 명뿐이고 10^6개 풍선 만들어야 하면.. 10^6 * 10^6 분 걸리니까..
 */
 public class Main {
     private static long solution(int[] times, int target) {

@@ -1,38 +1,53 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 /*
 [설명]
-- 순열 (순서 다르면 다르게 봄. 인정함) nPr
-[접근]
-- 백트래킹
+- 1부터 N까지 자연수 중 중복 없이 M개를 고른 수열 모두 구하기
+[접근] 조합(nCr) -> 백트래킹
+- 1,2 -> 1,3 -> 1,4
+- 2,1 -> 2,3 -> 2,4
+- 3,1 -> 3,2 -> 3,4
+- 4,1 -> 4,2 -> 4,3
+[메모]
 */
 public class Main {
-    public static int n, r;
-    public static int[] arr = new int[9];
-    public static boolean[] visited = new boolean[9]; // false로 초기화
+    private static int[] arr;
+    private static boolean[] visited;
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        r = sc.nextInt();
-        backtracking(0);
+    private static void solution(int n, int m) {
+        arr = new int[m];
+        visited = new boolean[n + 1];
+        backtracking(0, n, m);
     }
 
-    public static void backtracking(int x) {
-        if(x==r) { // [종료 조건] r개 다 뽑았다면 출력하고 return
-            for(int i=0; i<r; i++) {
-                System.out.print(arr[i] + " ");
+    private static void backtracking(int x, int n, int m) {
+        if (x == m) {
+            for (int a : arr) {
+                System.out.print(a + " ");
             }
             System.out.println();
             return;
         }
-
-        for(int i=1; i<=n; i++) { // [반복문] n개의 수 (1부터 N까지 중)
-            if(visited[i]) continue; // [제한조건] 이미 사용한 수는 사용 X
-            visited[i] = true; // [상태 변화] 사용한 수는 표시
-            arr[x] = i; // [현재 단계에서 해야 하는 작업] 정답에 집어 넣기
-            backtracking(x+1); // [다음 단계] 한 개의 수를 더 고름
-            visited[i] = false; // [원상 복구] 사용했다고 표시한 거 복구
+        for (int i = 1; i <= n; i++) {
+            if (!visited[i]) {
+                arr[x] = i;
+                visited[i] = true;
+                backtracking(x + 1, n, m);
+                visited[i] = false;
+            }
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        String[] input = br.readLine().split(" ");
+        int n = Integer.parseInt(input[0]);
+        int m = Integer.parseInt(input[1]);
+
+        solution(n, m);
+
+        br.close();
     }
 }
